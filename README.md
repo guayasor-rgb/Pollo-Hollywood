@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shellychicken Menu</title>
+    <title>Pollo HollyWood Menu</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -134,13 +134,14 @@
     <h1>Pollo HollyWood</h1>
 
     <div class="menu-section">
-        <h2>Paso 1: Cantidad de pollo (gramos)</h2>
+        <h2>Paso 1: Cantidad de pollo (lbs)</h2>
         <div class="slider-container">
-            <div id="grams-display">500 gramos</div>
-            <input type="range" id="grams-slider" min="100" max="1000" value="500" step="50">
+            <div id="grams-display">5 lbs</div>
+            <h2>Delezar<h2>
+            <input type="range" id="grams-slider" min="1" max="10" value="5" step="1">
             <p style="margin-top: 20px; color: #555;">
                 Price: $<span id="chicken-price">7.50</span>
-                <small>($0.015 per gramos)</small>
+                <small>($0.015 per .25/lb)</small>
             </p>
         </div>
     </div>
