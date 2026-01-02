@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pollo HollyWood Menu</title>
+    <title>Pollo Park</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,7 +16,25 @@
 
         h1 {
             color: #d4380d;
+            margin-bottom: 10px;
+        }
+
+        .lang-toggle {
             margin-bottom: 30px;
+        }
+
+        .lang-toggle button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .lang-toggle .active {
+            background-color: #d4380d;
+            color: white;
         }
 
         .menu-section {
@@ -100,28 +118,35 @@
         }
 
         .slider-container {
-            margin: 30px 0;
+            margin: 40px 0;
         }
 
-        #grams-display {
-            font-size: 32px;
+        #lbs-display {
+            font-size: 40px;
             font-weight: bold;
             color: #d4380d;
-            margin-bottom: 10px;
+            margin: 20px 0;
+        }
+
+        .slider-instruction {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
 
         input[type="range"] {
             width: 80%;
-            height: 10px;
-            border-radius: 5px;
+            height: 15px;
+            border-radius: 8px;
             background: #ddd;
             outline: none;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             appearance: none;
-            width: 25px;
-            height: 25px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             background: #d4380d;
             cursor: pointer;
@@ -131,57 +156,82 @@
 
 <body>
 
-    <h1>Pollo HollyWood</h1>
+    <h1 data-en="Pollo Park" data-es="Pollo Park">Pollo Park</h1>
+
+    <div class="lang-toggle">
+        <button id="btn-en">English</button>
+        <button id="btn-es" class="active">Español</button>
+    </div>
 
     <div class="menu-section">
-        <h2>Paso 1: Cantidad de pollo (lbs)</h2>
+        <h2 data-en="Step 1: How Much Chicken? (pounds)" data-es="Paso 1: ¿Cuánta pollo quieres? (libras)">
+            Paso 1: ¿Cuánta pollo quieres? (libras)
+        </h2>
         <div class="slider-container">
-            <div id="grams-display">5 lbs</div>
-            <h2>Delezar<h2>
-            <input type="range" id="grams-slider" min="1" max="10" value="5" step="1">
+            <p class="slider-instruction" data-en="👈 Slide the bar to choose the amount 👉"
+                data-es="👈 Desliza la barra para elegir la cantidad 👉">
+                👈 Desliza la barra para elegir la cantidad 👉
+            </p>
+            <div id="lbs-display">3 libras</div>
+            <input type="range" id="lbs-slider" min="1" max="10" value="3" step="0.5">
             <p style="margin-top: 20px; color: #555;">
-                Price: $<span id="chicken-price">7.50</span>
-                <small>($0.015 per .25/lb)</small>
+                <span data-en="Price for chicken:" data-es="Precio del pollo:"></span>
+                $<span id="chicken-price">9.00</span>
+                <small data-en="($3.00 per lb)" data-es="($3.00 por libra)">($3.00 por libra)</small>
             </p>
         </div>
     </div>
 
     <div class="menu-section">
-        <h2>Paso 2: Acompañante</h2>
+        <h2 data-en="Step 2: Side Dish" data-es="Paso 2: Acompañamiento">
+            Paso 2: Acompañamiento
+        </h2>
         <div class="options" id="side-options">
-            <div class="option" data-value="Plantain Chips" data-extra="0">Tostones<br><span
-                    class="price-tag">Included</span></div>
-            <div class="option" data-value="Pasta" data-extra="3">Pasta<br><span class="price-tag">+ $3.00</span></div>
+            <div class="option" data-value-en="Plantain Chips" data-value-es="Chips de Plátano" data-extra="0">
+                Chips de Plátano<br><span class="price-tag" data-en="Included" data-es="Incluido">Incluido</span>
+            </div>
+            <div class="option" data-value-en="Pasta" data-value-es="Pasta" data-extra="3">
+                Pasta<br><span class="price-tag">+ $3.00</span>
+            </div>
         </div>
     </div>
 
     <div class="menu-section">
-        <h2>Paso 3: Salsa</h2>
+        <h2 data-en="Step 3: Sauce" data-es="Paso 3: Salsa">
+            Paso 3: Salsa
+        </h2>
         <div class="options" id="sauce-options">
-            <div class="option" data-value="Tomato Basil" data-extra="0">Tomato Basil<br><span
-                    class="price-tag">Included</span></div>
-            <div class="option" data-value="Alfredo" data-extra="0">Alfredo<br><span class="price-tag">Included</span>
+            <div class="option" data-value-en="Tomato Basil" data-value-es="Tomate Albahaca" data-extra="0">
+                Tomate Albahaca<br><span class="price-tag" data-en="Included" data-es="Incluido">Incluido</span>
             </div>
-            <div class="option" data-value="Mixed Sauce" data-extra="1">Mixed Sauce<br><span class="price-tag">+
-                    $1.00</span></div>
+            <div class="option" data-value-en="Alfredo" data-value-es="Alfredo" data-extra="0">
+                Alfredo<br><span class="price-tag" data-en="Included" data-es="Incluido">Incluido</span>
+            </div>
+            <div class="option" data-value-en="Mixed Sauce" data-value-es="Salsa Mixta" data-extra="1">
+                Salsa Mixta<br><span class="price-tag">+ $1.00</span>
+            </div>
         </div>
     </div>
 
     <div id="total-price">
-        Total Price: <span id="price-display">$7.50</span>
+        <span data-en="Total Price:" data-es="Precio Total:">Precio Total:</span>
+        <span id="price-display">$9.00</span>
     </div>
 
-    <button id="whatsapp-button">Order on WhatsApp 📱</button>
+    <button id="whatsapp-button" data-en="Order on WhatsApp 📱" data-es="Ordenar por WhatsApp 📱">
+        Ordenar por WhatsApp 📱
+    </button>
 
     <script>
-        // === CHANGE THIS TO SET YOUR CHICKEN PRICE ===
-        const PRICE_PER_GRAM = 0.015;  // $0.015 per gram → 1000g = $15.00
+        // === CHANGE PRICE PER POUND HERE ===
+        const PRICE_PER_LB = 3.00;  // $3.00 per pound
 
-        // Replace with your real WhatsApp number (international format, no + or spaces)
+        // Replace with your real WhatsApp number (international format, no +)
         const YOUR_WHATSAPP_NUMBER = '593986785366';
 
+        let currentLang = 'es'; // Default: Spanish
         let selections = {
-            grams: 500,
+            lbs: 3,
             side: '',
             sauce: ''
         };
@@ -189,21 +239,20 @@
         let extraSide = 0;
         let extraSauce = 0;
 
-        const gramsSlider = document.getElementById('grams-slider');
-        const gramsDisplay = document.getElementById('grams-display');
+        const lbsSlider = document.getElementById('lbs-slider');
+        const lbsDisplay = document.getElementById('lbs-display');
         const chickenPriceDisplay = document.getElementById('chicken-price');
 
         function updateAll() {
-            selections.grams = parseInt(gramsSlider.value);
-            gramsDisplay.textContent = selections.grams + ' grams';
+            selections.lbs = parseFloat(lbsSlider.value);
+            lbsDisplay.textContent = selections.lbs.toFixed(1) + (currentLang === 'es' ? ' libras' : ' lbs');
 
-            const chickenPrice = selections.grams * PRICE_PER_GRAM;
+            const chickenPrice = selections.lbs * PRICE_PER_LB;
             chickenPriceDisplay.textContent = chickenPrice.toFixed(2);
 
             const total = chickenPrice + extraSide + extraSauce;
             document.getElementById('price-display').textContent = '$' + total.toFixed(2);
 
-            // Show button only when side and sauce are selected
             if (selections.side && selections.sauce) {
                 document.getElementById('whatsapp-button').style.display = 'block';
             } else {
@@ -211,30 +260,51 @@
             }
         }
 
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = el[`data-${lang}`] || el.textContent;
+            });
+            document.querySelectorAll('[data-value-en]').forEach(el => {
+                const optionText = el.querySelector('div, span'); // find main text
+                if (optionText && !optionText.classList.contains('price-tag')) {
+                    optionText.childNodes[0].textContent = el[`data-value-${lang}`];
+                }
+            });
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+            document.documentElement.lang = lang;
+            updateAll(); // refresh lbs text
+        }
+
         function generateWhatsAppLink() {
-            const chickenPrice = selections.grams * PRICE_PER_GRAM;
+            const chickenPrice = selections.lbs * PRICE_PER_LB;
             const total = chickenPrice + extraSide + extraSauce;
 
-            const message = `Hola Pollo HollyWood! Me gustaría ordenar:\n\n` +
-                `${selections.grams}g de pollo\n` +
-                `Acomonantes: ${selections.side}\n` +
-                `Salsa: ${selections.sauce}\n\n` +
-                `Total: $${total.toFixed(2)}\n\n` +
-                `Gracias!`;
+            const sideText = document.querySelector('#side-options .selected div, #side-options .selected span')
+                .childNodes[0].textContent.trim();
+            const sauceText = document.querySelector('#sauce-options .selected div, #sauce-options .selected span')
+                .childNodes[0].textContent.trim();
+
+            const message = currentLang === 'es'
+                ? `¡Hola Shellychicken! Quiero ordenar:\n\n${selections.lbs.toFixed(1)} libras de pollo\nAcompañamiento: ${sideText}\nSalsa: ${sauceText}\n\nTotal: \[ {total.toFixed(2)}\n\n¡Gracias!`
+                : `Hi Shellychicken! I'd like to order:\n\n${selections.lbs.toFixed(1)} lbs of chicken\nSide: ${sideText}\nSauce: ${sauceText}\n\nTotal: \]{total.toFixed(2)}\n\nThank you!`;
 
             const encodedMessage = encodeURIComponent(message);
-            return `https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            return `https://wa.me/\( {YOUR_WHATSAPP_NUMBER}?text= \){encodedMessage}`;
         }
+
+        // Language buttons
+        document.getElementById('btn-en').addEventListener('click', () => switchLanguage('en'));
+        document.getElementById('btn-es').addEventListener('click', () => switchLanguage('es'));
 
         // Side selection
         document.getElementById('side-options').addEventListener('click', function (e) {
             const clicked = e.target.closest('.option');
             if (!clicked) return;
-
             this.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
             clicked.classList.add('selected');
-
-            selections.side = clicked.dataset.value;
+            selections.side = clicked.querySelector('div, span').childNodes[0].textContent.trim();
             extraSide = parseFloat(clicked.dataset.extra || 0);
             updateAll();
         });
@@ -243,17 +313,15 @@
         document.getElementById('sauce-options').addEventListener('click', function (e) {
             const clicked = e.target.closest('.option');
             if (!clicked) return;
-
             this.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
             clicked.classList.add('selected');
-
-            selections.sauce = clicked.dataset.value;
+            selections.sauce = clicked.querySelector('div, span').childNodes[0].textContent.trim();
             extraSauce = parseFloat(clicked.dataset.extra || 0);
             updateAll();
         });
 
         // Slider
-        gramsSlider.addEventListener('input', updateAll);
+        lbsSlider.addEventListener('input', updateAll);
 
         // WhatsApp button
         document.getElementById('whatsapp-button').addEventListener('click', function () {
@@ -261,7 +329,7 @@
             window.open(link, '_blank');
         });
 
-        // Initial calculation
+        // Initial load
         updateAll();
     </script>
 
