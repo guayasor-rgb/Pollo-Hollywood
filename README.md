@@ -227,7 +227,7 @@
         const PRICE_PER_LB = 3.00;  // $3.00 per pound
 
         // Replace with your real WhatsApp number (international format, no +)
-        const YOUR_WHATSAPP_NUMBER = '593986785366';
+        const YOUR_WHATSAPP_NUMBER = 'Your_number';
 
         let currentLang = 'es'; // Default: Spanish
         let selections = {
