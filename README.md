@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pollo Park</title>
+    <title>Pollo Park Menu</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -42,7 +42,7 @@
             border-radius: 10px;
             padding: 20px;
             margin: 20px auto;
-            max-width: 600px;
+            max-width: 700px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -67,6 +67,7 @@
             cursor: pointer;
             width: 180px;
             transition: all 0.3s;
+            position: relative;
         }
 
         .option:hover {
@@ -76,7 +77,6 @@
         .option.selected {
             border-color: #d4380d;
             background-color: #ffe6d9;
-            font-weight: bold;
         }
 
         .price-tag {
@@ -84,6 +84,43 @@
             color: #d4380d;
             font-size: 18px;
             margin-top: 8px;
+        }
+
+        .quantity-controls {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: white;
+            border: 3px solid #d4380d;
+            border-radius: 50px;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .quantity-controls button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-controls button:disabled {
+            color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .quantity-controls button:hover:not(:disabled) {
+            color: #d4380d;
         }
 
         #total-price {
@@ -151,6 +188,16 @@
             background: #d4380d;
             cursor: pointer;
         }
+
+        .limit-note {
+            font-size: 16px;
+            color: #d4380d;
+            font-weight: bold;
+            margin-top: 10px;
+            background-color: #ffe6d9;
+            padding: 10px;
+            border-radius: 8px;
+        }
     </style>
 </head>
 
@@ -164,51 +211,56 @@
     </div>
 
     <div class="menu-section">
-        <h2 data-en="Step 1: How Much Chicken? (pounds)" data-es="Paso 1: ¿Cuánta pollo quieres? (libras)">
-            Paso 1: ¿Cuánta pollo quieres? (libras)
+        <h2 data-en="Step 1: How Much Chicken?" data-es="Paso 1: ¿Cuánto pollo quieres?">
+            Paso 1: ¿Cuánto pollo quieres?
         </h2>
         <div class="slider-container">
             <p class="slider-instruction" data-en="👈 Slide the bar to choose the amount 👉"
                 data-es="👈 Desliza la barra para elegir la cantidad 👉">
                 👈 Desliza la barra para elegir la cantidad 👉
             </p>
-            <div id="lbs-display">3 libras</div>
-            <input type="range" id="lbs-slider" min="1" max="10" value="3" step="0.5">
+            <div id="lbs-display">3.0 lbs</div>
+            <input type="range" id="lbs-slider" min="1" max="10" value="3" step="0.25">
             <p style="margin-top: 20px; color: #555;">
-                <span data-en="Price for chicken:" data-es="Precio del pollo:"></span>
+                <span data-en="Chicken price:" data-es="Precio del pollo:"></span>
                 $<span id="chicken-price">9.00</span>
                 <small data-en="($3.00 per lb)" data-es="($3.00 por libra)">($3.00 por libra)</small>
             </p>
+            <!-- <p class="limit-note" id="limits-note"></p> -->
         </div>
     </div>
 
     <div class="menu-section">
-        <h2 data-en="Step 2: Side Dish" data-es="Paso 2: Acompañamiento">
-            Paso 2: Acompañamiento
+        <h2 data-en="Step 2: Sides (click to add, then use +/−)"
+            data-es="Paso 2: Acompañamientos (toca para agregar, luego usa +/−)">
+            Paso 2: Acompañamientos (toca para agregar, luego usa +/−)
         </h2>
         <div class="options" id="side-options">
-            <div class="option" data-value-en="Plantain Chips" data-value-es="Chips de Plátano" data-extra="0">
-                Chips de Plátano<br><span class="price-tag" data-en="Included" data-es="Incluido">Incluido</span>
+            <div class="option" data-name-en="Plantain Chips" data-name-es="Chips de Plátano" data-price="0">
+                Chips de Plátano<br><span class="price-tag" data-en="Free each" data-es="Gratis cada uno">Gratis cada
+                    uno</span>
             </div>
-            <div class="option" data-value-en="Pasta" data-value-es="Pasta" data-extra="3">
-                Pasta<br><span class="price-tag">+ $3.00</span>
+            <div class="option" data-name-en="Pasta" data-name-es="Pasta" data-price="3">
+                Pasta<br><span class="price-tag">+ $3.00 c/u</span>
             </div>
         </div>
     </div>
 
     <div class="menu-section">
-        <h2 data-en="Step 3: Sauce" data-es="Paso 3: Salsa">
-            Paso 3: Salsa
+        <h2 data-en="Step 3: Sauces (click to add, then use +/−)"
+            data-es="Paso 3: Salsas (toca para agregar, luego usa +/−)">
+            Paso 3: Salsas (toca para agregar, luego usa +/−)
         </h2>
         <div class="options" id="sauce-options">
-            <div class="option" data-value-en="Tomato Basil" data-value-es="Tomate Albahaca" data-extra="0">
-                Tomate Albahaca<br><span class="price-tag" data-en="Included" data-es="Incluido">Incluido</span>
+            <div class="option" data-name-en="Tomato Basil" data-name-es="Tomate Albahaca" data-price="0">
+                Tomate Albahaca<br><span class="price-tag" data-en="Free each" data-es="Gratis cada una">Gratis cada
+                    una</span>
             </div>
-            <div class="option" data-value-en="Alfredo" data-value-es="Alfredo" data-extra="0">
-                Alfredo<br><span class="price-tag" data-en="Included" data-es="Incluido">Incluido</span>
+            <div class="option" data-name-en="Alfredo" data-name-es="Alfredo" data-price="0">
+                Alfredo<br><span class="price-tag" data-en="Free each" data-es="Gratis cada una">Gratis cada una</span>
             </div>
-            <div class="option" data-value-en="Mixed Sauce" data-value-es="Salsa Mixta" data-extra="1">
-                Salsa Mixta<br><span class="price-tag">+ $1.00</span>
+            <div class="option" data-name-en="Mixed Sauce" data-name-es="Salsa Mixta" data-price="1">
+                Salsa Mixta<br><span class="price-tag">+ $1.00 c/u</span>
             </div>
         </div>
     </div>
@@ -223,41 +275,137 @@
     </button>
 
     <script>
-        // === CHANGE PRICE PER POUND HERE ===
-        const PRICE_PER_LB = 3.00;  // $3.00 per pound
+        // === CHANGE PRICES HERE ===
+        const PRICE_PER_LB = 3.00; // Chicken price per lb
+        const PASTA_PRICE = 3.00; // Price per pasta portion
+        const MIXED_SAUCE_PRICE = 1.00; // Price per mixed sauce portion
 
-        // Replace with your real WhatsApp number (international format, no +)
-        const YOUR_WHATSAPP_NUMBER = 'Your_number';
+        const YOUR_WHATSAPP_NUMBER = 'YOUR_PHONE_NUMBER_HERE';
 
-        let currentLang = 'es'; // Default: Spanish
+        let currentLang = 'es';
         let selections = {
-            lbs: 3,
-            side: '',
-            sauce: ''
+            lbs: 3.0,
+            sides: {},
+            sauces: {}
         };
-
-        let extraSide = 0;
-        let extraSauce = 0;
 
         const lbsSlider = document.getElementById('lbs-slider');
         const lbsDisplay = document.getElementById('lbs-display');
         const chickenPriceDisplay = document.getElementById('chicken-price');
+        const limitsNote = document.getElementById('limits-note');
+
+        function getTotalSides() {
+            return Object.values(selections.sides).reduce((a, b) => a + b, 0);
+        }
+
+        function getTotalSauces() {
+            return Object.values(selections.sauces).reduce((a, b) => a + b, 0);
+        }
+
+        function getMaxAllowed() {
+            return Math.floor(selections.lbs);
+        }
+
+        function updatePlusButtons() {
+            const max = getMaxAllowed();
+            const totalSides = getTotalSides();
+            const totalSauces = getTotalSauces();
+
+            document.querySelectorAll('#side-options .plus').forEach(btn => {
+                btn.disabled = totalSides >= max;
+            });
+            document.querySelectorAll('#sauce-options .plus').forEach(btn => {
+                btn.disabled = totalSauces >= max;
+            });
+        }
+
+        function createQuantityControls(option, qty = 0) {
+            const controls = document.createElement('div');
+            controls.className = 'quantity-controls';
+            controls.innerHTML = `
+                <button class="minus">−</button>
+                <span class="qty">${qty}</span>
+                <button class="plus">+</button>
+            `;
+            option.appendChild(controls);
+
+            controls.querySelector('.minus').addEventListener('click', (e) => {
+                e.stopPropagation();
+                updateQuantity(option, -1);
+            });
+            controls.querySelector('.plus').addEventListener('click', (e) => {
+                e.stopPropagation();
+                updateQuantity(option, 1);
+            });
+
+            return controls;
+        }
+
+        function updateQuantity(option, change) {
+            const isSide = option.parentElement.id === 'side-options';
+            const collection = isSide ? selections.sides : selections.sauces;
+            const nameKey = currentLang === 'en' ? 'En' : 'Es';
+            const name = option.dataset[`name${nameKey}`];
+            const current = collection[name] || 0;
+            let newQty = current + change;
+
+            if (newQty < 0) newQty = 0;
+
+            // Check limits
+            const max = getMaxAllowed();
+            const currentTotal = isSide ? getTotalSides() : getTotalSauces();
+            if (change > 0 && currentTotal >= max) {
+                return;
+            }
+
+            if (newQty === 0) {
+                delete collection[name];
+                option.classList.remove('selected');
+                const controls = option.querySelector('.quantity-controls');
+                if (controls) controls.remove();
+            } else {
+                collection[name] = newQty;
+                option.classList.add('selected');
+                let controls = option.querySelector('.quantity-controls');
+                if (!controls) controls = createQuantityControls(option, newQty);
+                controls.querySelector('.qty').textContent = newQty;
+            }
+
+            updateAll();
+        }
 
         function updateAll() {
             selections.lbs = parseFloat(lbsSlider.value);
-            lbsDisplay.textContent = selections.lbs.toFixed(1) + (currentLang === 'es' ? ' libras' : ' lbs');
+            lbsDisplay.textContent = selections.lbs.toFixed(2) + (currentLang === 'es' ? ' lbs' : ' lbs');
 
             const chickenPrice = selections.lbs * PRICE_PER_LB;
             chickenPriceDisplay.textContent = chickenPrice.toFixed(2);
 
-            const total = chickenPrice + extraSide + extraSauce;
+            const max = getMaxAllowed();
+            const remainingSides = max - getTotalSides();
+            const remainingSauces = max - getTotalSauces();
+
+            limitsNote.innerHTML = currentLang === 'es'
+                ? `Puedes seleccionar hasta \( {max} porciones de acompañamientos ( \){remainingSides} restantes) y hasta \( {max} porciones de salsas ( \){remainingSauces} restantes)`
+                : `You can select up to \( {max} side portions ( \){remainingSides} remaining) and up to \( {max} sauce portions ( \){remainingSauces} remaining)`;
+
+            let extras = 0;
+            Object.keys(selections.sides).forEach(name => {
+                const opt = [...document.querySelectorAll('#side-options .option')].find(o => o.dataset[`name${currentLang === 'en' ? 'En' : 'Es'}`] === name);
+                extras += selections.sides[name] * parseFloat(opt.dataset.price);
+            });
+            Object.keys(selections.sauces).forEach(name => {
+                const opt = [...document.querySelectorAll('#sauce-options .option')].find(o => o.dataset[`name${currentLang === 'en' ? 'En' : 'Es'}`] === name);
+                extras += selections.sauces[name] * parseFloat(opt.dataset.price);
+            });
+
+            const total = chickenPrice + extras;
             document.getElementById('price-display').textContent = '$' + total.toFixed(2);
 
-            if (selections.side && selections.sauce) {
-                document.getElementById('whatsapp-button').style.display = 'block';
-            } else {
-                document.getElementById('whatsapp-button').style.display = 'none';
-            }
+            const hasExtras = Object.keys(selections.sides).length > 0 || Object.keys(selections.sauces).length > 0;
+            document.getElementById('whatsapp-button').style.display = hasExtras ? 'block' : 'none';
+
+            updatePlusButtons();
         }
 
         function switchLanguage(lang) {
@@ -265,69 +413,71 @@
             document.querySelectorAll('[data-en]').forEach(el => {
                 el.textContent = el[`data-${lang}`] || el.textContent;
             });
-            document.querySelectorAll('[data-value-en]').forEach(el => {
-                const optionText = el.querySelector('div, span'); // find main text
-                if (optionText && !optionText.classList.contains('price-tag')) {
-                    optionText.childNodes[0].textContent = el[`data-value-${lang}`];
-                }
+            document.querySelectorAll('[data-name-en]').forEach(option => {
+                const mainText = option.querySelector('br').previousSibling;
+                if (mainText) mainText.textContent = option[`data-name-${lang}`] + ' ';
             });
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             document.getElementById('btn-es').classList.toggle('active', lang === 'es');
             document.documentElement.lang = lang;
-            updateAll(); // refresh lbs text
+            updateAll();
         }
 
         function generateWhatsAppLink() {
             const chickenPrice = selections.lbs * PRICE_PER_LB;
-            const total = chickenPrice + extraSide + extraSauce;
+            let extras = 0;
+            let orderLines = [];
 
-            const sideText = document.querySelector('#side-options .selected div, #side-options .selected span')
-                .childNodes[0].textContent.trim();
-            const sauceText = document.querySelector('#sauce-options .selected div, #sauce-options .selected span')
-                .childNodes[0].textContent.trim();
+            orderLines.push(`${selections.lbs.toFixed(2)} ${currentLang === 'es' ? 'libras de pollo' : 'lbs of chicken'}`);
+
+            Object.keys(selections.sides).forEach(name => {
+                const qty = selections.sides[name];
+                orderLines.push(`${qty}× ${name}`);
+                const opt = [...document.querySelectorAll('#side-options .option')].find(o => o.dataset[`name${currentLang === 'en' ? 'En' : 'Es'}`] === name);
+                extras += qty * parseFloat(opt.dataset.price);
+            });
+            Object.keys(selections.sauces).forEach(name => {
+                const qty = selections.sauces[name];
+                orderLines.push(`${qty}× ${name}`);
+                const opt = [...document.querySelectorAll('#sauce-options .option')].find(o => o.dataset[`name${currentLang === 'en' ? 'En' : 'Es'}`] === name);
+                extras += qty * parseFloat(opt.dataset.price);
+            });
+
+            const total = chickenPrice + extras;
 
             const message = currentLang === 'es'
-                ? `¡Hola Shellychicken! Quiero ordenar:\n\n${selections.lbs.toFixed(1)} libras de pollo\nAcompañamiento: ${sideText}\nSalsa: ${sauceText}\n\nTotal: \[ {total.toFixed(2)}\n\n¡Gracias!`
-                : `Hi Shellychicken! I'd like to order:\n\n${selections.lbs.toFixed(1)} lbs of chicken\nSide: ${sideText}\nSauce: ${sauceText}\n\nTotal: \]{total.toFixed(2)}\n\nThank you!`;
+                ? `¡Hola Pollo Park! Quiero ordenar🍗:\n\n` + orderLines.join('\n') + `\n\nTotal: \[ {total.toFixed(2)}\n\n¡Gracias!`
+                : `Hi Pollo Park! I'd like to order🍗:\n\n` + orderLines.join('\n') + `\n\nTotal: \]{total.toFixed(2)}\n\nThank you!`;
 
-            const encodedMessage = encodeURIComponent(message);
-            return `https://wa.me/\( {YOUR_WHATSAPP_NUMBER}?text= \){encodedMessage}`;
+            return `https://wa.me/\( {YOUR_WHATSAPP_NUMBER}?text= \){encodeURIComponent(message)}`;
         }
 
-        // Language buttons
+        // Click on option to add first portion
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', () => {
+                const isSide = option.parentElement.id === 'side-options';
+                const currentTotal = isSide ? getTotalSides() : getTotalSauces();
+                if (currentTotal < getMaxAllowed()) {
+                    updateQuantity(option, 1);
+                }
+            });
+        });
+
+        // Language toggle
         document.getElementById('btn-en').addEventListener('click', () => switchLanguage('en'));
         document.getElementById('btn-es').addEventListener('click', () => switchLanguage('es'));
-
-        // Side selection
-        document.getElementById('side-options').addEventListener('click', function (e) {
-            const clicked = e.target.closest('.option');
-            if (!clicked) return;
-            this.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            clicked.classList.add('selected');
-            selections.side = clicked.querySelector('div, span').childNodes[0].textContent.trim();
-            extraSide = parseFloat(clicked.dataset.extra || 0);
-            updateAll();
-        });
-
-        // Sauce selection
-        document.getElementById('sauce-options').addEventListener('click', function (e) {
-            const clicked = e.target.closest('.option');
-            if (!clicked) return;
-            this.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            clicked.classList.add('selected');
-            selections.sauce = clicked.querySelector('div, span').childNodes[0].textContent.trim();
-            extraSauce = parseFloat(clicked.dataset.extra || 0);
-            updateAll();
-        });
 
         // Slider
         lbsSlider.addEventListener('input', updateAll);
 
-        // WhatsApp button
-        document.getElementById('whatsapp-button').addEventListener('click', function () {
-            const link = generateWhatsAppLink();
-            window.open(link, '_blank');
+        // WhatsApp
+        document.getElementById('whatsapp-button').addEventListener('click', () => {
+            window.open(generateWhatsAppLink(), '_blank');
         });
+
+        // Update data-price for easy changes (but you can change constants above instead)
+        document.querySelector('#side-options .option[data-name-en="Pasta"]').dataset.price = PASTA_PRICE;
+        document.querySelector('#sauce-options .option[data-name-en="Mixed Sauce"]').dataset.price = MIXED_SAUCE_PRICE;
 
         // Initial load
         updateAll();
