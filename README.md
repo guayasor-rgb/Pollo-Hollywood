@@ -190,13 +190,38 @@
         }
 
         .limit-note {
-            font-size: 16px;
+            font-size: 18px;
             color: #d4380d;
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 20px;
             background-color: #ffe6d9;
-            padding: 10px;
+            padding: 15px;
             border-radius: 8px;
+            line-height: 1.6;
+        }
+
+        /* Donation Section */
+        .donation-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 700px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        #donation-reminder {
+            font-size: 18px;
+            font-weight: bold;
+            color: #d4380d;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .gfm-embed {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -211,15 +236,15 @@
     </div>
 
     <div class="menu-section">
-        <h2 data-en="Step 1: How Much Chicken?" data-es="Paso 1: ¿Cuánto pollo quieres?">
-            Paso 1: ¿Cuánto pollo quieres?
+        <h2 data-en="Step 1: How Much Chicken? (pounds)" data-es="Paso 1: ¿Cuánto pollo quieres? (libras)">
+            Paso 1: ¿Cuánto pollo quieres? (libras)
         </h2>
         <div class="slider-container">
             <p class="slider-instruction" data-en="👈 Slide the bar to choose the amount 👉"
                 data-es="👈 Desliza la barra para elegir la cantidad 👉">
                 👈 Desliza la barra para elegir la cantidad 👉
             </p>
-            <div id="lbs-display">3.0 lbs</div>
+            <div id="lbs-display">3.00 libras</div>
             <input type="range" id="lbs-slider" min="1" max="10" value="3" step="0.25">
             <p style="margin-top: 20px; color: #555;">
                 <span data-en="Chicken price:" data-es="Precio del pollo:"></span>
@@ -274,11 +299,25 @@
         Ordenar por WhatsApp 📱
     </button>
 
+    <!-- DONATION SECTION -->
+    <div class="donation-section">
+        <div id="donation-reminder" data-en="Please make your payment in the form of a donation through the link below:"
+            data-es="Por favor, haga su pago en forma de donación a través del enlace abajo:">
+            Por favor, haga su pago en forma de donación a través del enlace abajo:
+        </div>
+
+        <div class="gfm-embed"
+            data-url="https://www.gofundme.com/f/nutritious-meals-for-guayaquils-children/widget/large?sharesheet=undefined&attribution_id=sl:f568b931-52c2-46f4-bbe9-40f94caa815a">
+        </div>
+    </div>
+
+    <script defer src="https://www.gofundme.com/static/js/embed.js"></script>
+
     <script>
         // === CHANGE PRICES HERE ===
-        const PRICE_PER_LB = 3.00; // Chicken price per lb
-        const PASTA_PRICE = 3.00; // Price per pasta portion
-        const MIXED_SAUCE_PRICE = 1.00; // Price per mixed sauce portion
+        const PRICE_PER_LB = 3.00;
+        const PASTA_PRICE = 3.00;
+        const MIXED_SAUCE_PRICE = 1.00;
 
         const YOUR_WHATSAPP_NUMBER = 'YOUR_PHONE_NUMBER_HERE';
 
@@ -351,7 +390,6 @@
 
             if (newQty < 0) newQty = 0;
 
-            // Check limits
             const max = getMaxAllowed();
             const currentTotal = isSide ? getTotalSides() : getTotalSauces();
             if (change > 0 && currentTotal >= max) {
@@ -376,7 +414,7 @@
 
         function updateAll() {
             selections.lbs = parseFloat(lbsSlider.value);
-            lbsDisplay.textContent = selections.lbs.toFixed(2) + (currentLang === 'es' ? ' lbs' : ' lbs');
+            lbsDisplay.textContent = selections.lbs.toFixed(2) + (currentLang === 'es' ? ' libras' : ' lbs');
 
             const chickenPrice = selections.lbs * PRICE_PER_LB;
             chickenPriceDisplay.textContent = chickenPrice.toFixed(2);
@@ -386,8 +424,8 @@
             const remainingSauces = max - getTotalSauces();
 
             limitsNote.innerHTML = currentLang === 'es'
-                ? `Puedes seleccionar hasta \( {max} porciones de acompañamientos ( \){remainingSides} restantes) y hasta \( {max} porciones de salsas ( \){remainingSauces} restantes)`
-                : `You can select up to \( {max} side portions ( \){remainingSides} remaining) and up to \( {max} sauce portions ( \){remainingSauces} remaining)`;
+                ? `¡Buena elección! Con \( {selections.lbs.toFixed(2)} libras de pollo, puedes agregar hasta <strong> \){max} acompañamientos</strong> (te quedan \( {remainingSides}) y hasta <strong> \){max} salsas</strong> (te quedan ${remainingSauces}).`
+                : `Great choice! With \( {selections.lbs.toFixed(2)} lbs of chicken, you can add up to <strong> \){max} sides</strong> (\( {remainingSides} left) and up to <strong> \){max} sauces</strong> (${remainingSauces} left).`;
 
             let extras = 0;
             Object.keys(selections.sides).forEach(name => {
@@ -446,13 +484,12 @@
             const total = chickenPrice + extras;
 
             const message = currentLang === 'es'
-                ? `¡Hola Pollo Park! Quiero ordenar🍗:\n\n` + orderLines.join('\n') + `\n\nTotal: \[ {total.toFixed(2)}\n\n¡Gracias!`
-                : `Hi Pollo Park! I'd like to order🍗:\n\n` + orderLines.join('\n') + `\n\nTotal: \]{total.toFixed(2)}\n\nThank you!`;
+                ? `¡Hola Pollo Park! Quiero ordenar:\n\n` + orderLines.join('\n') + `\n\nTotal: \[ {total.toFixed(2)}\n\n¡Gracias!`
+                : `Hi Pollo Park! I'd like to order:\n\n` + orderLines.join('\n') + `\n\nTotal: \]{total.toFixed(2)}\n\nThank you!`;
 
             return `https://wa.me/\( {YOUR_WHATSAPP_NUMBER}?text= \){encodeURIComponent(message)}`;
         }
 
-        // Click on option to add first portion
         document.querySelectorAll('.option').forEach(option => {
             option.addEventListener('click', () => {
                 const isSide = option.parentElement.id === 'side-options';
@@ -463,23 +500,19 @@
             });
         });
 
-        // Language toggle
         document.getElementById('btn-en').addEventListener('click', () => switchLanguage('en'));
         document.getElementById('btn-es').addEventListener('click', () => switchLanguage('es'));
 
-        // Slider
         lbsSlider.addEventListener('input', updateAll);
 
-        // WhatsApp
         document.getElementById('whatsapp-button').addEventListener('click', () => {
             window.open(generateWhatsAppLink(), '_blank');
         });
 
-        // Update data-price for easy changes (but you can change constants above instead)
+        // Update prices from constants
         document.querySelector('#side-options .option[data-name-en="Pasta"]').dataset.price = PASTA_PRICE;
         document.querySelector('#sauce-options .option[data-name-en="Mixed Sauce"]').dataset.price = MIXED_SAUCE_PRICE;
 
-        // Initial load
         updateAll();
     </script>
 
